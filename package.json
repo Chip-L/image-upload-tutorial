@@ -1,0 +1,20 @@
+{
+  "name": "image-upload-tutorial",
+  "version": "1.0.0",
+  "description": "following some tutorials on how to upload images to an express server using react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chip-L/image-upload-tutorial.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chip-L/image-upload-tutorial/issues"
+  },
+  "homepage": "https://github.com/Chip-L/image-upload-tutorial#readme"
+}
