@@ -11,8 +11,8 @@
     "url": "git+https://github.com/Chip-L/image-upload-tutorial.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Chip Long",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Chip-L/image-upload-tutorial/issues"
   },
