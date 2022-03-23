@@ -4,7 +4,7 @@
   "description": "following some tutorials on how to upload images to an express server using react",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "echo Change to the proper directory and re-run start. && exit 1"
   },
   "repository": {
     "type": "git",
