@@ -14,6 +14,7 @@ function FileUpload() {
     let selectedFile: File | null = e.target.files ? e.target.files[0] : null;
 
     if (selectedFile) {
+      setStatusMsg("");
       setErrMsg("");
       setFile(selectedFile);
       setFileName(selectedFile.name);
@@ -44,9 +45,13 @@ function FileUpload() {
           throw new Error("Something went wrong");
         })
         .then((res: any) => {
-          console.log(res);
+          console.log("Success section:", res);
+          if (res.code > 200) {
+            setErrMsg(res.msg);
+          } else {
+            setStatusMsg(res.msg);
+          }
           setIsLoading(false);
-          setStatusMsg(res.msg);
         })
         .catch((err) => {
           setIsLoading(false);
@@ -71,9 +76,19 @@ function FileUpload() {
         />
         <button onClick={uploadFile}>Upload</button>
       </div>
-      {isLoading && <p className="status">Loading...</p>}
-      {statusMsg && <p className="status">{statusMsg}</p>}
-      {errMsg && <p className="status error">{errMsg}</p>}
+      {/* {isLoading && <p className="status">Loading...</p>} */}
+      <p className={`status${errMsg ? " error" : ""}`}>
+        {errMsg ? (
+          errMsg
+        ) : isLoading ? (
+          "Loading..."
+        ) : statusMsg ? (
+          statusMsg
+        ) : (
+          <br />
+        )}
+      </p>
+      {/* {errMsg && <p className="status error">{errMsg}</p>} */}
       {file && <ImagePreview file={file} />}
     </div>
   );
