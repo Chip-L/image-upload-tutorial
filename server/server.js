@@ -5,6 +5,9 @@ const routes = require("./routes");
 const app = express();
 const PORT = 3001;
 
+//use express static folder
+app.use(express.static("./public"));
+
 // set up middleware (parses incoming req as JSON)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
