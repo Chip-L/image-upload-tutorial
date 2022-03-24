@@ -34,7 +34,7 @@ function FileUpload() {
         },
         body: formData,
       };
-      fetch("http://localhost:3000/upload", options)
+      fetch("http://localhost:3001/api/add-image", options)
         .then((res) => res.json())
         .then((res) => setStatusMsg(res.msg))
         .catch((err) => {
