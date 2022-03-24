@@ -1,6 +1,8 @@
 const express = require("express");
 const multer = require("multer");
 
+const routes = require("./routes");
+
 const app = express();
 const PORT = 3001;
 
@@ -14,6 +16,8 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
 });
+
+app.use(routes);
 
 app.listen(PORT, (err) => {
   if (err) console.log(err);
