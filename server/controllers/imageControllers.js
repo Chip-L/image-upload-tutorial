@@ -1,16 +1,14 @@
 exports.uploadSingle = (req, res, err) => {
-  console.log("uploadSingle reached:", req.file.originalname);
-  console.log(
-    "!req.file.originalname.match(/.(jpg|JPG|jpeg|JPEG|png|PNG)$/)",
-    !req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)
-  );
+  console.log("uploadSingle reached:", req.file);
+
   // check for bad type
-  if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
-    console.log("bad extension");
+  if (!req.file) {
+    // if (err) {
     res.send({
-      msg: "Only image files (jpg, jpeg, png) are allowed!",
+      msg: "uploadSingle: Only image files (jpg, jpeg, png) are allowed!",
       code: 400,
     });
+    return;
   }
 
   console.log("Your image has been updated!");
