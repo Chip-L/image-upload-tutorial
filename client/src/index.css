@@ -1,0 +1,44 @@
+.myContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.myCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.myBackground {
+  background-color: lightblue;
+  padding: 5em;
+  border: 0.1em solid black;
+  border-radius: 5em;
+}
+
+.status {
+  /* text-align: center; */
+  margin-top: 1em;
+}
+
+.error {
+  color: red;
+}
+
+.displayImage {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.displayImage p {
+  margin: 0;
+  margin-bottom: 0.3em;
+}
+
+.myImage {
+  margin: 0;
+  height: 5em;
+}
