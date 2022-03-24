@@ -3,7 +3,7 @@ const express = require("express");
 const routes = require("./routes");
 
 const app = express();
-const PORT = 3001;
+const PORT = 8000;
 
 //use express static folder
 app.use(express.static("./public"));
