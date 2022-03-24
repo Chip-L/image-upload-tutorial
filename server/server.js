@@ -1,21 +1,13 @@
 const express = require("express");
-const multer = require("multer");
 
 const routes = require("./routes");
 
 const app = express();
 const PORT = 3001;
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "./"),
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split("/")[1];
-    cb(null, `uploads/${file.originalname}-${Date.now()}.${ext}`);
-  },
-});
-const upload = multer({
-  storage,
-});
+// set up middleware (parses incoming req as JSON)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
 
