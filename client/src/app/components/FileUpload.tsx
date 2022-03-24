@@ -59,6 +59,7 @@ function FileUpload() {
       </div>
       {statusMsg && <p className="status">{statusMsg}</p>}
       {errMsg && <p className="status error">{errMsg}</p>}
+      {file && <ImagePreview file={file} />}
     </div>
   );
 }
