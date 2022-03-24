@@ -1,4 +1,5 @@
 exports.uploadSingle = (req, res, err) => {
+  console.log("uploadSingle reached");
   // check for type
   if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
     console.log("bad extension");
