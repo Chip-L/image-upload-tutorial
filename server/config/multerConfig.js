@@ -27,11 +27,16 @@ exports.fileFilter = (req, file, cb) => {
     console.log("bad extension");
     cb(null, false);
     // the following line crashes the system. We do not get to the send
-    return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
+    return cb(new Error("Only .png, .jpg and .jpeg format allowed!"), false);
   }
 };
+
+const maxSize = 1 * 1024 * 1024; // for 1MB
+// const maxSize = 1 * 1024; // for 1KB
+exports.limits = { fileSize: maxSize };
 
 exports.upload = multer({
   storage: this.storage,
   fileFilter: this.fileFilter,
+  limits: this.limits,
 });

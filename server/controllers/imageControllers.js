@@ -1,5 +1,5 @@
 const multer = require("multer");
-const { storage, fileFilter } = require("../config/multerConfig");
+const { storage, fileFilter, limits } = require("../config/multerConfig");
 
 exports.uploadSingle = (err, req, res, next) => {
   console.log("uploadSingle reached:");
@@ -22,7 +22,7 @@ exports.uploadSingle = (err, req, res, next) => {
 
 exports.uploadSingleNoMW = (req, res, next) => {
   console.log("uploadSingleNoMW reached:", req.body);
-  const upload = multer({ storage, fileFilter }).single("file");
+  const upload = multer({ storage, fileFilter, limits }).single("file");
 
   // This defines the req.file
   upload(req, res, function (err) {
