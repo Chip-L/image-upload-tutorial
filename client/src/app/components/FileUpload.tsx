@@ -21,9 +21,11 @@ function FileUpload() {
     }
   };
 
-  const uploadFile = () => {
+  const uploadFile = (url: string) => {
     if (file) {
       setIsLoading(true);
+      setStatusMsg("");
+      setErrMsg("");
       const formData = new FormData();
       formData.append("file", file);
       formData.append("fileName", fileName);
@@ -36,7 +38,7 @@ function FileUpload() {
         body: formData,
       };
       //  Note: don't use the full URL here... the proxy will pick up the correct path. Otherwise it will give a CORS error.
-      fetch("/api/add-image", options)
+      fetch(url, options)
         .then((res) => {
           if (res.ok) {
             return res.json();
@@ -66,17 +68,21 @@ function FileUpload() {
 
   return (
     <div className="myCard">
-      <div>
-        <input
-          type="file"
-          name="image"
-          accept="image/*"
-          multiple={false}
-          onChange={imageHandler}
-        />
-        <button onClick={uploadFile}>Upload</button>
-      </div>
-      {/* {isLoading && <p className="status">Loading...</p>} */}
+      <input
+        type="file"
+        name="image"
+        accept="image/*"
+        multiple={false}
+        onChange={imageHandler}
+      />
+
+      <button onClick={() => uploadFile("/api/add-image")}>
+        Upload using Middleware
+      </button>
+      <button onClick={() => uploadFile("/api/add-image-no-mw")}>
+        Upload not using Middleware
+      </button>
+
       <p className={`status${errMsg ? " error" : ""}`}>
         {errMsg ? (
           errMsg
@@ -88,7 +94,6 @@ function FileUpload() {
           <br />
         )}
       </p>
-      {/* {errMsg && <p className="status error">{errMsg}</p>} */}
       {file && <ImagePreview file={file} />}
     </div>
   );
