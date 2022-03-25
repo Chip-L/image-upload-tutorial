@@ -21,48 +21,55 @@ function FileUpload() {
     }
   };
 
-  const uploadFile = (url: string) => {
-    if (file) {
-      setIsLoading(true);
-      setStatusMsg("");
-      setErrMsg("");
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("fileName", fileName);
-
-      const options: RequestInit = {
-        method: "POST",
-        headers: {
-          Accept: "multipart/form-data",
-        },
-        body: formData,
-      };
-      //  Note: don't use the full URL here... the proxy will pick up the correct path. Otherwise it will give a CORS error.
-      fetch(url, options)
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          console.log(res);
-          throw new Error("Something went wrong");
-        })
-        .then((res: any) => {
-          console.log("Success section:", res);
-          if (res.code > 200) {
-            setErrMsg(res.msg);
-          } else {
-            setStatusMsg(res.msg);
-          }
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setIsLoading(false);
-          setErrMsg("There was an error in upload");
-          console.log("upload catch error:");
-          console.log(err);
-        });
-    } else {
+  const uploadFile = async (url: string) => {
+    if (!file) {
       setErrMsg("Choose a file");
+      return;
+    }
+
+    // reset the messaging properly
+    setIsLoading(true);
+    setStatusMsg("");
+    setErrMsg("");
+
+    // create the multipart form
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("fileName", fileName);
+
+    // create the header options
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        Accept: "multipart/form-data",
+      },
+      body: formData,
+    };
+
+    try {
+      //  Note: don't use the full URL here... the proxy will pick up the correct path. Otherwise it will give a CORS error.
+      const res = await fetch(url, options);
+      const body = (await res.json()) as any;
+
+      console.log("res:", res);
+      console.log("body:", body);
+
+      if (!res.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      console.log("Success section:", res);
+      if (body.code > 200) {
+        setErrMsg(body.msg);
+      } else {
+        setStatusMsg(body.msg);
+      }
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      setErrMsg("There was an error in upload");
+      console.log("upload catch error:");
+      console.log(JSON.stringify(err));
     }
   };
 
