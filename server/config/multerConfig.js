@@ -25,9 +25,8 @@ exports.fileFilter = (req, file, cb) => {
     cb(null, true);
   } else {
     console.log("bad extension");
-    cb(null, false);
-    // the following line crashes the system. We do not get to the send
-    return cb(new Error("Only .png, .jpg and .jpeg format allowed!"), false);
+    //throw an appropriate multer error so we can catch it later.
+    return cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE"), false);
   }
 };
 

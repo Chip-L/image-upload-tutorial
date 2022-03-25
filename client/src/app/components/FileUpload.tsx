@@ -83,9 +83,9 @@ function FileUpload() {
         onChange={imageHandler}
       />
 
-      <button onClick={() => uploadFile("/api/add-image")}>
+      {/* <button onClick={() => uploadFile("/api/add-image")}>
         Upload using Middleware
-      </button>
+      </button> */}
       <button onClick={() => uploadFile("/api/add-image-no-mw")}>
         Upload not using Middleware
       </button>

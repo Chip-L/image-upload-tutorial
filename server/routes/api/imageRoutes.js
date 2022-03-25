@@ -5,7 +5,7 @@ const {
   uploadSingleNoMW,
 } = require("../../controllers/imageControllers");
 
-router.post("/add-image", upload.single("file"), uploadSingle);
+// router.post("/add-image", upload.single("file"), uploadSingle);
 router.post("/add-image-no-mw", uploadSingleNoMW);
 
 // export router

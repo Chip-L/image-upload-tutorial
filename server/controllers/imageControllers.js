@@ -77,6 +77,11 @@ const validateError = (err, funcName = "") => {
   return resJson;
 };
 
+/* 
+This code does not actually work. If I take out the "err", it works fine for valid files, but it doesn't catch the error message for the invalid files. If I leave "err" in, the upload middleware never passes over to here and the code never executes for valid files. 
+
+As per https://www.npmjs.com/package/multer#error-handling, we shouldn't be doing this with middleware and we need to include it in the function.
+
 exports.uploadSingle = (err, req, res, next) => {
   console.log("uploadSingle reached:");
   console.log("\tfile:", req.file);
@@ -91,6 +96,7 @@ exports.uploadSingle = (err, req, res, next) => {
   console.log("uploadSingle: Your image has been updated!");
   res.json({ msg: "Your image has been updated!", code: 200 });
 };
+*/
 
 exports.uploadSingleNoMW = (req, res, next) => {
   const upload = multer({ storage, fileFilter, limits }).single("file");
@@ -98,7 +104,7 @@ exports.uploadSingleNoMW = (req, res, next) => {
   // This defines the req.file
   upload(req, res, function (err) {
     if (err) {
-      res.json(validateError(err));
+      res.json(validateError(err, uploadSingleNoMW));
       return;
     }
 
