@@ -4,7 +4,7 @@
   "description": "following some tutorials on how to upload images to an express server using react",
   "main": "index.js",
   "scripts": {
-    "start": "echo Change to the proper directory and re-run start. && exit 1"
+    "start": "cd client && start npm start && cd ../server && start npm start"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,6 @@
   "bugs": {
     "url": "https://github.com/Chip-L/image-upload-tutorial/issues"
   },
-  "homepage": "https://github.com/Chip-L/image-upload-tutorial#readme"
+  "homepage": "https://github.com/Chip-L/image-upload-tutorial#readme",
+  "dependencies": {}
 }
