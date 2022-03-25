@@ -1,6 +1,82 @@
 const multer = require("multer");
 const { storage, fileFilter, limits } = require("../config/multerConfig");
 
+// MulterError body:
+// code: "LIMIT_FILE_SIZE";
+// field: "file";
+// message: "File too large";
+// name: "MulterError";
+// storageErrors: [];
+
+const validateError = (err, funcName = "") => {
+  if (funcName) funcName += ": ";
+  let resJson = {};
+  if (err instanceof multer.MulterError) {
+    console.log(funcName + "MulterError error:\n", err);
+
+    switch (err.code) {
+      case "LIMIT_PART_COUNT":
+        resJson = {
+          msg: "Too many parts",
+          code: 400,
+        };
+        break;
+      case "LIMIT_FILE_SIZE":
+        resJson = {
+          msg: "File too large",
+          code: 413,
+        };
+        break;
+      case "LIMIT_FILE_COUNT":
+        resJson = {
+          msg: "Too many files",
+          code: 413,
+        };
+        break;
+      case "LIMIT_FIELD_KEY":
+        resJson = {
+          msg: "Field name too long",
+          code: 400,
+        };
+        break;
+      case "LIMIT_FIELD_VALUE":
+        resJson = {
+          msg: "Field value too long",
+          code: 400,
+        };
+        break;
+      case "LIMIT_FIELD_COUNT":
+        resJson = {
+          msg: "Too many fields",
+          code: 400,
+        };
+        break;
+      case "LIMIT_UNEXPECTED_FILE":
+        resJson = {
+          msg: "Only .png, .jpg and .jpeg format allowed!",
+          code: 400,
+        };
+        break;
+      case "MISSING_FIELD_NAME":
+        resJson = {
+          msg: "Field name missing",
+          code: 400,
+        };
+        break;
+    }
+  } else if (err) {
+    console.log(
+      funcName + "A non-MulterError error occurred when uploading:\n",
+      err
+    );
+    resJson = {
+      msg: "unknown?" + err.message,
+      code: 500,
+    };
+  }
+  return resJson;
+};
+
 exports.uploadSingle = (err, req, res, next) => {
   console.log("uploadSingle reached:");
   console.log("\tfile:", req.file);
@@ -8,46 +84,28 @@ exports.uploadSingle = (err, req, res, next) => {
 
   // check for bad type
   if (err) {
-    console.log("uploadSingle: error reached");
-    res.send({
-      msg: "uploadSingle: Only image files (jpg, jpeg, png) are allowed!",
-      code: 400,
-    });
+    res.json(validateError(err, "uploadSingle"));
     return;
   }
 
-  console.log("Your image has been updated!");
-  res.send({ msg: "Your image has been updated!", code: 200 });
+  console.log("uploadSingle: Your image has been updated!");
+  res.json({ msg: "Your image has been updated!", code: 200 });
 };
 
 exports.uploadSingleNoMW = (req, res, next) => {
-  console.log("uploadSingleNoMW reached:", req.body);
   const upload = multer({ storage, fileFilter, limits }).single("file");
 
   // This defines the req.file
   upload(req, res, function (err) {
-    console.log("err:", err);
-    if (err instanceof multer.MulterError) {
-      console.log("MulterError", err);
-      res.send({
-        msg: "Multer?",
-        code: 400,
-      });
-      return;
-    } else if (err) {
-      console.log("An unknown error occurred when uploading.");
-      res.send({
-        msg: "unknown?" + err.message,
-        code: 500,
-      });
+    if (err) {
+      res.json(validateError(err));
       return;
     }
 
+    // Everything went fine.
     console.log("body:", req.body);
     console.log("file:", req.file);
-    console.log("everything is ok");
-    res.send({ msg: "Your image has been updated!", code: 200 });
-
-    // Everything went fine.
+    console.log("uploadSingleNoMW: everything is ok");
+    res.json({ msg: "Your image has been updated!", code: 200 });
   });
 };
