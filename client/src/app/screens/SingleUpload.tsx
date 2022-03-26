@@ -70,6 +70,7 @@ function SingleUpload() {
 
   return (
     <div className="myCard">
+      <h3>Single Input</h3>
       <input
         type="file"
         name="image"

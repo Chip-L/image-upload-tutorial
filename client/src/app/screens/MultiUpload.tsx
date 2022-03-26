@@ -2,7 +2,6 @@ import { ChangeEvent, useState } from "react";
 import doFetch from "../utils/doFetch";
 import ImagePreview from "../components/ImagePreview";
 import Carousel from "../components/Carousel";
-// import "./FileUpload.css";
 
 function MultiUpload() {
   const [files, setFiles] = useState<File[]>();
@@ -75,6 +74,7 @@ function MultiUpload() {
 
   return (
     <div className="myCard">
+      <h3>Multiple Inputs</h3>
       <input
         type="file"
         name="image"
