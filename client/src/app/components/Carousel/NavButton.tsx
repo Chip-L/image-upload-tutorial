@@ -8,8 +8,10 @@ interface NavButtonProps {
 
 function NavButton({ direction, onClick }: NavButtonProps) {
   return (
-    <div className="navButton" onClick={onClick}>
-      {direction === "left" ? "<" : ">"}
+    <div className="buttonContainer">
+      <div className="navButton" onClick={onClick}>
+        {direction === "left" ? "<" : ">"}
+      </div>
     </div>
   );
 }

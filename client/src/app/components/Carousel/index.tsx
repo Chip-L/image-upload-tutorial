@@ -13,18 +13,20 @@ function Carousel({ children }: CarouselProps) {
     children = [children];
   }
 
-  useEffect(() => {
-    //test
-    if (Array.isArray(children)) {
-      console.log(children.length);
-    } else {
-      console.log("not array");
-    }
-  }, []);
+  // useEffect(() => {
+  //   //test
+  //   if (Array.isArray(children)) {
+  //     console.log("length:", children.length);
+  //     console.log("currentSlide:", currentSlide);
+  //   } else {
+  //     console.log("not array");
+  //   }
+  // }, [currentSlide]);
 
   const activeSlide = children.map((slide, index) => (
     <div
-      className={`carouselSlide ${currentSlide === index ? "active" : ""}`}
+      className={"carouselSlide" + (currentSlide === index ? " active" : "")}
+      style={{ opacity: currentSlide === index ? 1 : 0 }}
       key={index}
     >
       {slide}
@@ -32,34 +34,36 @@ function Carousel({ children }: CarouselProps) {
   ));
 
   return (
-    <div style={{ border: ".2em solid red", width: "100%" }}>
+    <>
       <div className="carouselWrapper">
+        {children.length > 1 && (
+          <NavButton
+            direction="left"
+            onClick={() => {
+              setCurrentSlide(
+                (currentSlide - 1 + activeSlide.length) % activeSlide.length
+              );
+            }}
+          />
+        )}
+
         <div
-          className="carouselSlide"
+          className="carouselSlides"
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
         >
           {activeSlide}
         </div>
+
+        {children.length > 1 && (
+          <NavButton
+            direction="right"
+            onClick={() => {
+              setCurrentSlide((currentSlide + 1) % activeSlide.length);
+            }}
+          />
+        )}
       </div>
-      {children.length > 1 && (
-        <NavButton
-          direction="left"
-          onClick={() => {
-            setCurrentSlide(
-              (currentSlide - 1 + activeSlide.length) % activeSlide.length
-            );
-          }}
-        />
-      )}
-      {children.length > 1 && (
-        <NavButton
-          direction="right"
-          onClick={() => {
-            setCurrentSlide((currentSlide + 1) % activeSlide.length);
-          }}
-        />
-      )}
-    </div>
+    </>
   );
 }
 
