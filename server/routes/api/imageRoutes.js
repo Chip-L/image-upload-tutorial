@@ -3,6 +3,7 @@ const { upload } = require("../../config/multerConfig");
 const {
   uploadSingle,
   uploadSingleNoMW,
+  uploadMultiNoMW,
 } = require("../../controllers/imageControllers");
 
 // router.post("/add-image", upload.single("file"), uploadSingle);
