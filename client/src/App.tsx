@@ -1,7 +1,7 @@
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-import FileUpload from "./app/components/FileUpload";
 import Carousel from "./app/components/Carousel";
+import SingleUpload from "./app/screens/SingleUpload";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <div className="myCard myBackground">
         <h2 className="p-2">React/Node js file upload example</h2>
         <Carousel>
-          <FileUpload />
+          <SingleUpload />
         </Carousel>
       </div>
     </div>

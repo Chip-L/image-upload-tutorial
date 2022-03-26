@@ -1,9 +1,9 @@
-import { Console } from "console";
 import { ChangeEvent, useState } from "react";
-import ImagePreview from "./ImagePreview";
+import doFetch from "../utils/doFetch";
+import ImagePreview from "../components/ImagePreview";
 // import "./FileUpload.css";
 
-function FileUpload() {
+function SingleUpload() {
   const [file, setFile] = useState<File>();
   const [fileName, setFileName] = useState("");
   const [statusMsg, setStatusMsg] = useState("");
@@ -47,12 +47,7 @@ function FileUpload() {
     };
 
     try {
-      //  Note: don't use the full URL here... the proxy will pick up the correct path. Otherwise it will give a CORS error.
-      const res = await fetch(url, options);
-      const body = (await res.json()) as any;
-
-      console.log("res:", res);
-      console.log("body:", body);
+      const { body, res } = await doFetch(url, options);
 
       if (!res.ok) {
         throw new Error("Something went wrong");
@@ -106,4 +101,4 @@ function FileUpload() {
   );
 }
 
-export default FileUpload;
+export default SingleUpload;
