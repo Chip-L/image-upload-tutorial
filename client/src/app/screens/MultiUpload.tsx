@@ -21,6 +21,12 @@ function MultiUpload() {
     const fileList: File[] = Object.values(selectedFiles);
     const fileNames = fileList.map((file) => file.name);
 
+    // console.log("\n************************************");
+    // console.log("selectedFiles:", selectedFiles);
+    // console.log("fileList:", fileList);
+    // console.log("fileNames:", fileNames);
+    // console.log("************************************");
+
     setFiles(fileList);
     setFileNames(fileNames);
   };
@@ -102,7 +108,7 @@ function MultiUpload() {
         )}
       </p>
       {files && (
-        <Carousel>
+        <Carousel showNumItemsOnSide={2}>
           {files.map((file, idx) => (
             <ImagePreview file={file} key={idx} />
           ))}
