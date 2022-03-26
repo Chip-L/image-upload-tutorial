@@ -34,6 +34,7 @@ const maxSize = 1 * 1024 * 1024; // for 1MB
 // const maxSize = 1 * 1024; // for 1KB
 exports.limits = { fileSize: maxSize };
 
+// this is actually not used, this is needed if multer is used as a middleware
 exports.upload = multer({
   storage: this.storage,
   fileFilter: this.fileFilter,

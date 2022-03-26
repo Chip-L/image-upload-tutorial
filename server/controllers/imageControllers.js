@@ -115,3 +115,21 @@ exports.uploadSingleNoMW = (req, res, next) => {
     res.json({ msg: "Your image has been updated!", code: 200 });
   });
 };
+
+exports.uploadMultiNoMW = (req, res, next) => {
+  const upload = multer({ storage, fileFilter, limits }).array("files");
+
+  // This defines the req.file
+  upload(req, res, function (err) {
+    if (err) {
+      res.json(validateError(err, uploadMultiNoMW));
+      return;
+    }
+
+    // Everything went fine.
+    console.log("body:", req.body);
+    console.log("files:", req.files);
+    console.log("uploadMultiNoMW: everything is ok");
+    res.json({ msg: "Your image has been updated!", code: 200 });
+  });
+};

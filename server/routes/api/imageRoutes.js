@@ -8,5 +8,7 @@ const {
 // router.post("/add-image", upload.single("file"), uploadSingle);
 router.post("/add-image-no-mw", uploadSingleNoMW);
 
+router.post("/add-multiple-no-mw", uploadMultiNoMW);
+
 // export router
 module.exports = router;
