@@ -1,32 +1,37 @@
 import { ChangeEvent, useState } from "react";
 import doFetch from "../utils/doFetch";
 import ImagePreview from "../components/ImagePreview";
+import Carousel from "../components/Carousel";
 // import "./FileUpload.css";
 
 function MultiUpload() {
-  const [file, setFile] = useState<File>();
-  const [fileName, setFileName] = useState("");
+  const [files, setFiles] = useState<File[]>();
+  const [fileNames, setFileNames] = useState<string[]>([]);
   const [statusMsg, setStatusMsg] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const imageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    let selectedFile: File | null = e.target.files ? e.target.files[0] : null;
+    const selectedFiles = e.target.files;
 
-    if (selectedFile) {
-      setStatusMsg("");
-      setErrMsg("");
-      setFile(selectedFile);
-      setFileName(selectedFile.name);
-    }
+    if (!selectedFiles) return;
+
+    setStatusMsg("");
+    setErrMsg("");
+
+    const fileList: File[] = Object.values(selectedFiles);
+    const fileNames = fileList.map((file) => file.name);
+
+    setFiles(fileList);
+    setFileNames(fileNames);
   };
 
   const uploadFile = async (url: string) => {
-    if (!file) {
+    if (!files) {
       setErrMsg("Choose a file");
       return;
     }
-
+    /*
     // reset the messaging properly
     setIsLoading(true);
     setStatusMsg("");
@@ -34,7 +39,7 @@ function MultiUpload() {
 
     // create the multipart form
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", files);
     formData.append("fileName", fileName);
 
     // create the header options
@@ -65,7 +70,7 @@ function MultiUpload() {
       setErrMsg("There was an error in upload");
       console.log("upload catch error:");
       console.log(JSON.stringify(err));
-    }
+    }*/
   };
 
   return (
@@ -74,7 +79,7 @@ function MultiUpload() {
         type="file"
         name="image"
         accept="image/*"
-        multiple={false}
+        multiple={true}
         onChange={imageHandler}
       />
 
@@ -96,7 +101,13 @@ function MultiUpload() {
           <br />
         )}
       </p>
-      {file && <ImagePreview file={file} />}
+      {files && (
+        <Carousel>
+          {files.map((file, idx) => (
+            <ImagePreview file={file} key={idx} />
+          ))}
+        </Carousel>
+      )}
     </div>
   );
 }
