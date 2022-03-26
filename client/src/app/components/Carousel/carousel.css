@@ -1,0 +1,26 @@
+.carouselWrapper {
+  display: flex;
+  width: 100%;
+}
+
+.carouselSlide {
+  flex: 0 0 auto;
+  opacity: 0;
+  transition: all 0.5s ease;
+  width: 100%;
+}
+
+.carouselSlide .active {
+  opacity: 1;
+}
+
+.carouselSlides {
+  display: flex;
+  transition: all 0.5s ease;
+}
+
+.navButton {
+  font-size: 10em;
+  padding: 1em;
+  border: 0.1em solid "#a9a9a9";
+}
