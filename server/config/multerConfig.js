@@ -1,42 +1,43 @@
+// See instructions at: https://www.npmjs.com/package/multer
 const multer = require("multer");
+
+const MAX_FILE_SIZE = 1 * 1024 * 1024; // for 1MB
 
 exports.storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "./public/uploads/"),
   filename: (req, file, cb) => {
-    // split the file.originalname into components with a dot (so we can capture the extension)
+    // create the file name:
+    // 1. split the file.originalname into components with a dot (so we can capture the extension)
+    // 2. capture the extension (and simultaneously remove it)
+    // 3. redo the filename portion removing any spaces and replacing them with hyphens
     const origFullName = file.originalname.split(".");
-    // capture the extension
     const ext = origFullName.pop();
-    // redo the filename portion removing any spaces and replacing them with hyphens
     const fileName = origFullName.join(".").split(" ").join("-");
 
-    // create the filename to be saved
+    // create and save the filename
     cb(null, `${fileName}-${Date.now()}.${ext}`);
   },
 });
 
+// create the filter for the files. Throw an appropriate multer error so we can catch it later.
 exports.fileFilter = (req, file, cb) => {
   if (
     file.mimetype == "image/png" ||
     file.mimetype == "image/jpg" ||
     file.mimetype == "image/jpeg"
   ) {
-    console.log("good extension");
     cb(null, true);
   } else {
-    console.log("bad extension");
-    //throw an appropriate multer error so we can catch it later.
     return cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE"), false);
   }
 };
 
-const maxSize = 1 * 1024 * 1024; // for 1MB
-// const maxSize = 1 * 1024; // for 1KB
-exports.limits = { fileSize: maxSize };
+// set the size limit
+exports.limits = { fileSize: MAX_FILE_SIZE };
 
 // this is actually not used, this is needed if multer is used as a middleware
-exports.upload = multer({
-  storage: this.storage,
-  fileFilter: this.fileFilter,
-  limits: this.limits,
-});
+// exports.upload = multer({
+//   storage: this.storage,
+//   fileFilter: this.fileFilter,
+//   limits: this.limits,
+// });

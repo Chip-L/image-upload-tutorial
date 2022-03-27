@@ -8,6 +8,7 @@ const { storage, fileFilter, limits } = require("../config/multerConfig");
 // name: "MulterError";
 // storageErrors: [];
 
+// https://github.com/expressjs/multer/blob/master/lib/multer-error.js
 const validateError = (err, funcName = "") => {
   if (funcName) funcName += ": ";
   let resJson = {};
@@ -109,13 +110,14 @@ exports.uploadSingleNoMW = (req, res, next) => {
     }
 
     // Everything went fine.
-    console.log("body:", req.body);
-    console.log("file:", req.file);
-    console.log("uploadSingleNoMW: everything is ok");
+    // console.log("body:", req.body);
+    // console.log("file:", req.file);
+    // console.log("uploadSingleNoMW: everything is ok");
     res.json({ msg: "Your image has been updated!", code: 200 });
   });
 };
 
+// Note: if 1 file is bad, all files are rejected.
 exports.uploadMultiNoMW = (req, res, next) => {
   const upload = multer({ storage, fileFilter, limits }).array("files");
 
@@ -126,10 +128,10 @@ exports.uploadMultiNoMW = (req, res, next) => {
       return;
     }
 
-    // Everything went fine.
-    console.log("body:", req.body);
-    console.log("files:", req.files);
-    console.log("uploadMultiNoMW: everything is ok");
+    // // Everything went fine.
+    // console.log("body:", req.body);
+    // console.log("files:", req.files);
+    // console.log("uploadMultiNoMW: everything is ok");
     res.json({ msg: "Your image has been updated!", code: 200 });
   });
 };
