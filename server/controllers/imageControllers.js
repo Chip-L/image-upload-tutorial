@@ -104,7 +104,7 @@ exports.uploadSingleNoMW = (req, res, next) => {
   // This defines the req.file
   upload(req, res, function (err) {
     if (err) {
-      res.json(validateError(err, uploadSingleNoMW));
+      res.json(validateError(err, "uploadSingleNoMW"));
       return;
     }
 
@@ -122,7 +122,7 @@ exports.uploadMultiNoMW = (req, res, next) => {
   // This defines the req.file
   upload(req, res, function (err) {
     if (err) {
-      res.json(validateError(err, uploadMultiNoMW));
+      res.json(validateError(err, "uploadMultiNoMW"));
       return;
     }
 

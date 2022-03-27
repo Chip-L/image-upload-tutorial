@@ -36,7 +36,7 @@ function MultiUpload() {
       setErrMsg("Choose a file");
       return;
     }
-    /*
+
     // reset the messaging properly
     setIsLoading(true);
     setStatusMsg("");
@@ -44,8 +44,12 @@ function MultiUpload() {
 
     // create the multipart form
     const formData = new FormData();
-    formData.append("file", files);
-    formData.append("fileName", fileName);
+    for (let file of files) {
+      formData.append("files", file);
+    }
+    for (let name of fileNames) {
+      formData.append("fileName", name);
+    }
 
     // create the header options
     const options: RequestInit = {
@@ -75,7 +79,7 @@ function MultiUpload() {
       setErrMsg("There was an error in upload");
       console.log("upload catch error:");
       console.log(JSON.stringify(err));
-    }*/
+    }
   };
 
   return (
@@ -92,7 +96,7 @@ function MultiUpload() {
       {/* <button onClick={() => uploadFile("/api/add-image")}>
         Upload using Middleware
       </button> */}
-      <button onClick={() => uploadFile("/api/add-image-no-mw")}>
+      <button onClick={() => uploadFile("/api/add-multiple-no-mw")}>
         MultiUploads not using Middleware
       </button>
 
