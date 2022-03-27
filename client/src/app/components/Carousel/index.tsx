@@ -54,15 +54,15 @@ function Carousel(props: CarouselProps) {
     }
     setItemList([...tempList]);
 
-    console.log("\n************************************");
-    console.log("# of children:", childLength);
-    console.log("listSize:", listSize);
-    console.log("itemList:", itemList);
-    console.log("currentSlide:", currentSlide);
-    console.log("showNumItemsOnSide:", showNumItemsOnSide);
-    console.log("startNum:", startNum);
-    console.log("tempList:", tempList);
-    console.log("************************************");
+    // console.log("\n************************************");
+    // console.log("# of children:", childLength);
+    // console.log("listSize:", listSize);
+    // console.log("itemList:", itemList);
+    // console.log("currentSlide:", currentSlide);
+    // console.log("showNumItemsOnSide:", showNumItemsOnSide);
+    // console.log("startNum:", startNum);
+    // console.log("tempList:", tempList);
+    // console.log("************************************");
   }, [children, currentSlide]);
 
   const activeSlide = itemList.map((slide, index) => (
